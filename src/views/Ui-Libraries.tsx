@@ -1,9 +1,8 @@
 import * as v from 'valibot';
-import { setComponent, NFCSchema, setWrappers, formConfig, patchAttributes } from '@piying/view-core';
+import { setComponent, NFCSchema, setWrappers, patchAttributes } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
-import { debounceTime, pipe } from 'rxjs';
 const schema = v.pipe(
   v.object({
     firstName: v.pipe(

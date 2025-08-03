@@ -1,8 +1,7 @@
 import type { ControlValueAccessor } from '@piying/view-core';
 import { CVA, PI_VIEW_FIELD_TOKEN, useControlValueAccessor, useSignalToRef } from '@piying/view-react';
-import { useContext, useImperativeHandle, useMemo } from 'react';
-import { Input, TextInput } from '@mantine/core';
-import { errorString } from '../util/error-string';
+import { useContext, useImperativeHandle } from 'react';
+import { TextInput } from '@mantine/core';
 import '@mantine/core/styles.css'
 
 interface PiInputOptions {
