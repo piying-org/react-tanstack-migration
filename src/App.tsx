@@ -4,6 +4,7 @@ import { LargeForm } from './views/Large-Form';
 import { QueryIntegration } from './views/Query-Integration';
 import { Simple } from './views/Simple';
 import { StandardSchema } from './views/Standard-Schema';
+import { UiLibraries } from './views/Ui-Libraries';
 const List = [
   {
     label: 'Simple',
@@ -34,6 +35,12 @@ const List = [
     from: 'https://tanstack.com/form/latest/docs/framework/react/examples/standard-schema',
     to: '/views/Standard-Schema',
     Component: StandardSchema,
+  },
+  {
+    label: 'Ui Libraries',
+    from: 'https://tanstack.com/form/latest/docs/framework/react/examples/ui-libraries',
+    to: '/views/Ui-Libraries',
+    Component: UiLibraries,
   },
 ];
 function App() {

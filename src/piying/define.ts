@@ -10,6 +10,8 @@ import { ArrayRwGroup } from './group/array-rw';
 import { MultiCheckbox } from './multi-checkbox';
 import { FormHelp } from './form-help';
 import { Button } from './button';
+import { lazy } from 'react';
+import { MantineWrapper } from './wrapper/mantine-wrapper';
 
 export const fieldConfig = {
   types: {
@@ -23,6 +25,10 @@ export const fieldConfig = {
     formHelper: { type: FormHelp },
     object: { type: PiyingGroup },
     button: { type: Button },
+    'mui-input': { type: lazy(() => import('./mui/input-text').then(({ MuiTextField }) => ({ default: MuiTextField }))) },
+    'mui-checkbox': { type: lazy(() => import('./mui/checkbox').then(({ MuiCheckbox }) => ({ default: MuiCheckbox }))) },
+    'mantine-input': { type: lazy(() => import('./mantine/input-text').then(({ MantineTextField }) => ({ default: MantineTextField }))) },
+    'mantine-checkbox': { type: lazy(() => import('./mantine/checkbox').then(({ MantineCheckbox }) => ({ default: MantineCheckbox }))) },
   },
   wrappers: {
     label: {
@@ -30,6 +36,9 @@ export const fieldConfig = {
     },
     validator: {
       type: ValidatorWrapper,
+    },
+    mantine: {
+      type: MantineWrapper,
     },
   },
 } as PiViewConfig;
