@@ -63,7 +63,7 @@ function App() {
                   Tanstack Page
                 </a>
                 <a
-                  href={'https://github.com/piying-org/react-hook-form-migration/tree/main/src' + item.to + '.tsx'}
+                  href={'https://github.com/piying-org/react-tanstack-migration/tree/main/src' + item.to + '.tsx'}
                   className="link-secondary btn"
                   target="_blank"
                 >
