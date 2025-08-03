@@ -1,17 +1,8 @@
 import * as v from 'valibot';
-import {
-  setComponent,
-  NFCSchema,
-  setWrappers,
-  patchProps,
-  asVirtualGroup,
-} from '@piying/view-core';
+import { setComponent, NFCSchema, setWrappers, patchProps, asVirtualGroup } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
-function LabelCommon<T>() {
-  return [setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })] as const;
-}
 
 const schema = v.pipe(
   v.intersect([

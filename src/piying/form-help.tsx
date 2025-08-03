@@ -49,7 +49,7 @@ export function FormHelp(props: FormHelpOptions) {
           filter((item) => item === VALID),
           take(1)
         )
-        .subscribe((status) => {
+        .subscribe((_) => {
           alert(JSON.stringify(field.form.root.value, undefined, 4));
           setSubmitting(false);
         });
