@@ -1,4 +1,4 @@
-import type { PiViewConfig } from '@piying/view-react';
+import { PiyingGroup, type PiViewConfig } from '@piying/view-react';
 import { FieldsetGroup } from './group/fieldset';
 import { InputCheckbox } from './input-checkbox';
 import { InputNumber } from './input-number';
@@ -9,6 +9,7 @@ import { ValidatorWrapper } from './wrapper/validator-wrapper';
 import { ArrayRwGroup } from './group/array-rw';
 import { MultiCheckbox } from './multi-checkbox';
 import { FormHelp } from './form-help';
+import { Button } from './button';
 
 export const fieldConfig = {
   types: {
@@ -20,6 +21,8 @@ export const fieldConfig = {
     'multi-checkbox': { type: MultiCheckbox },
     'array-rw': { type: ArrayRwGroup },
     formHelper: { type: FormHelp },
+    object: { type: PiyingGroup },
+    button: { type: Button },
   },
   wrappers: {
     label: {

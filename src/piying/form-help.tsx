@@ -2,7 +2,7 @@ import { PI_VIEW_FIELD_TOKEN, useSignalToRef } from '@piying/view-react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import JSONFormatter from 'json-formatter-js';
 import { errorString } from './util/error-string';
-
+import { PENDING } from '@piying/view-core';
 interface FormHelpOptions {}
 export function FormHelp(props: FormHelpOptions) {
   const field = useContext(PI_VIEW_FIELD_TOKEN)!;
@@ -14,9 +14,11 @@ export function FormHelp(props: FormHelpOptions) {
   const formatedHtml = useMemo(() => new JSONFormatter(value).render(), [value]);
   const forceShowError = useSignalToRef(field, (field) => field.props()['forceShowError']);
   const hasError = useSignalToRef(control, (control) => !!control.errors);
+  const isPending = useSignalToRef(control, (control) => {
+    return control.status$$() === PENDING;
+  });
   const isChangedStatus = useSignalToRef(control, (control) => control?.dirty$$() || control?.touched$$());
   const errors = control.errors;
-
   const errorStr$$ = useMemo(() => {
     if (!errors) {
       return '';
@@ -56,13 +58,13 @@ export function FormHelp(props: FormHelpOptions) {
             }
           }}
         ></div>
-        {forceShowError || (hasError && isChangedStatus) ? (
+        {forceShowError || (hasError && isChangedStatus && !isPending) ? (
           <div>
             <label className="label">Form Error</label>
             <pre className="mt-2 text-error">{errorStr$$}</pre>
           </div>
         ) : undefined}
-
+        {isPending ? <div>Pending...</div> : undefined}
         <div className="flex gap-2 items-center">
           <input type="submit" disabled={control.invalid || isSubmitting} className="btn btn-primary" onClick={submit} />
           <input type="reset" className="btn btn-outline btn-secondary" onClick={resetForm} />

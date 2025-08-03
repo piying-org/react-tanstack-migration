@@ -1,12 +1,12 @@
 import { PI_VIEW_FIELD_TOKEN, useSignalToRef, type PiResolvedViewFieldConfig, PiyingFieldTemplate } from '@piying/view-react';
 import clsx from 'clsx';
 import { useCallback, useContext, useMemo } from 'react';
-export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLength: number }) {
+export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLength: number; initItem?: (index: number) => any }) {
   const field = useContext(PI_VIEW_FIELD_TOKEN)!;
   const props2 = useSignalToRef(field, (field) => field?.props());
   const add = useCallback(() => {
-    field.action.set(undefined);
-  }, [field]);
+    field.action.set(props.initItem?.(props.fields.length));
+  }, [field, props.initItem, props.fields]);
 
   const remove = useCallback(
     (index: number) => {
@@ -27,7 +27,7 @@ export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLe
         {props2?.['title'] ? <legend className="fieldset-legend">{props2['title']}</legend> : undefined}
         {props.fields.map((field, index) => {
           return (
-            <div key={index} className='flex items-center gap-2 *:first:flex-1'>
+            <div key={index} className="flex items-center gap-2 *:first:flex-1">
               <PiyingFieldTemplate field={field} key={index}></PiyingFieldTemplate>
               <button className={itemClass} onClick={() => remove(index)} aria-disabled={btnDisabled}>
                 🗑️
