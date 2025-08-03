@@ -1,5 +1,6 @@
 import './App.css';
 import { ArrayDemo } from './views/Array';
+import { FieldErrorsFromFormValidators } from './views/Field-Errors-From-Form-Validators';
 import { LargeForm } from './views/Large-Form';
 import { QueryIntegration } from './views/Query-Integration';
 import { Simple } from './views/Simple';
@@ -41,6 +42,12 @@ const List = [
     from: 'https://tanstack.com/form/latest/docs/framework/react/examples/ui-libraries',
     to: '/views/Ui-Libraries',
     Component: UiLibraries,
+  },
+  {
+    label: 'Field Errors From Form Validators',
+    from: 'https://tanstack.com/form/latest/docs/framework/react/examples/field-errors-from-form-validators',
+    to: '/views/Field-Errors-From-Form-Validators',
+    Component: FieldErrorsFromFormValidators,
   },
 ];
 function App() {

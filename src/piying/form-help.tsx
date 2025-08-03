@@ -2,8 +2,12 @@ import { PI_VIEW_FIELD_TOKEN, useSignalToRef } from '@piying/view-react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import JSONFormatter from 'json-formatter-js';
 import { errorString } from './util/error-string';
-import { PENDING } from '@piying/view-core';
-interface FormHelpOptions {}
+import { INVALID, PENDING, VALID } from '@piying/view-core';
+import { filter, firstValueFrom, skip, take, takeUntil, takeWhile } from 'rxjs';
+interface FormHelpOptions {
+  forceEnableSubmit?: boolean;
+  asyncSubmit?: boolean;
+}
 export function FormHelp(props: FormHelpOptions) {
   const field = useContext(PI_VIEW_FIELD_TOKEN)!;
   const props2 = useSignalToRef(field, () => field?.props());
@@ -37,9 +41,24 @@ export function FormHelp(props: FormHelpOptions) {
       });
     }
     field.form.root!.emitSubmit();
-    alert(JSON.stringify(value, undefined, 4));
+    if (props.asyncSubmit) {
+      field.form.root.statusChanges
+        .pipe(
+          skip(1),
+          takeWhile((item) => item !== INVALID),
+          filter((item) => item === VALID),
+          take(1)
+        )
+        .subscribe((status) => {
+          alert(JSON.stringify(field.form.root.value, undefined, 4));
+          setSubmitting(false);
+        });
+      return;
+    }
+
+    alert(JSON.stringify(field.form.root.value, undefined, 4));
     setSubmitting(false);
-  }, [value, props2, field]);
+  }, [props2, field, props.asyncSubmit]);
   const resetForm = useCallback(() => {
     control.reset(initData);
   }, [initData]);
@@ -66,7 +85,12 @@ export function FormHelp(props: FormHelpOptions) {
         ) : undefined}
         {isPending ? <div>Pending...</div> : undefined}
         <div className="flex gap-2 items-center">
-          <input type="submit" disabled={control.invalid || isSubmitting} className="btn btn-primary" onClick={submit} />
+          <input
+            type="submit"
+            disabled={!props.forceEnableSubmit && (control.invalid || isSubmitting)}
+            className="btn btn-primary"
+            onClick={submit}
+          />
           <input type="reset" className="btn btn-outline btn-secondary" onClick={resetForm} />
           <button className="btn btn-outline btn-accent" onClick={saveInit}>
             Update Intial Values
