@@ -1,12 +1,9 @@
-import { PI_VIEW_FIELD_TOKEN, useSignalToRef, type PiResolvedViewFieldConfig, PiyingFieldTemplate } from '@piying/view-react';
+import { PI_VIEW_FIELD_TOKEN, useSignalToRef, PiyingFieldTemplate } from '@piying/view-react';
 import clsx from 'clsx';
 import { useCallback, useContext, useMemo } from 'react';
-export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLength: number; initItem?: (index: number) => any }) {
+export function ArrayRwGroup(props: { minLength: number; initItem?: (index: number) => any }) {
   const field = useContext(PI_VIEW_FIELD_TOKEN)!;
   const props2 = useSignalToRef(field, (field) => field?.props());
-  const add = useCallback(() => {
-    field.action.set(props.initItem?.(props.fields.length));
-  }, [field, props.initItem, props.fields]);
 
   const remove = useCallback(
     (index: number) => {
@@ -14,10 +11,12 @@ export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLe
     },
     [field]
   );
+  const children = useSignalToRef(field, (field) => field?.children!())!;
+  const add = useCallback(() => {
+    field.action.set(props.initItem?.(children.length));
+  }, [field, props.initItem, children]);
 
-  const list = useSignalToRef(field, (field) => field.fieldArray!());
-
-  const btnDisabled = useMemo(() => list.length <= props.minLength, [list, props.minLength]);
+  const btnDisabled = useMemo(() => children.length <= props.minLength, [children, props.minLength]);
   const itemClass = useMemo(() => {
     return clsx('btn btn-circle btn-soft btn-error', { 'btn-disabled': btnDisabled });
   }, [btnDisabled]);
@@ -25,7 +24,7 @@ export function ArrayRwGroup(props: { fields: PiResolvedViewFieldConfig[]; minLe
     <>
       <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 w-full">
         {props2?.['title'] ? <legend className="fieldset-legend">{props2['title']}</legend> : undefined}
-        {props.fields.map((field, index) => {
+        {children.map((field, index) => {
           return (
             <div key={index} className="flex items-center gap-2 *:first:flex-1">
               <PiyingFieldTemplate field={field} key={index}></PiyingFieldTemplate>
