@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { setComponent, patchInputs, NFCSchema, patchAsyncProps } from '@piying/view-core';
+import { setComponent, actions, NFCSchema } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -9,7 +9,7 @@ const schema = v.pipe(
       v.array(
         v.pipe(
           v.object({ name: v.string() }),
-          patchAsyncProps({
+          actions.props.patchAsync({
             title: (field) => {
               return `Name for person ${field.keyPath![0]}`;
             },
@@ -18,7 +18,7 @@ const schema = v.pipe(
         )
       ),
       setComponent('array-rw'),
-      patchInputs({
+      actions.inputs.patch({
         initItem: () => {
           return { name: '', age: 0 };
         },

@@ -1,13 +1,5 @@
 import * as v from 'valibot';
-import {
-  setComponent,
-  patchInputs,
-  NFCSchema,
-  setWrappers,
-  formConfig,
-  patchAsyncAttributes,
-  VALID,
-} from '@piying/view-core';
+import { setComponent, actions, NFCSchema, formConfig, VALID } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -19,7 +11,7 @@ const schema = v.pipe(
       v.string(),
       v.minLength(3),
       v.title('First Name:'),
-      setWrappers(['label', 'validator']),
+      actions.wrappers.set(['label', 'validator']),
       formConfig({
         pipe: { toModel: pipe(debounceTime(500)) },
         asyncValidators: [
@@ -33,11 +25,11 @@ const schema = v.pipe(
         ],
       })
     ),
-    lastName: v.pipe(v.string(), setWrappers(['label', 'validator']), v.title('Last Name:')),
+    lastName: v.pipe(v.string(), actions.wrappers.set(['label', 'validator']), v.title('Last Name:')),
     __Submit: v.pipe(
       NFCSchema,
-      patchInputs({ label: 'Submit(Context)' }),
-      patchAsyncAttributes({
+      actions.inputs.patch({ label: 'Submit(Context)' }),
+      actions.attributes.patchAsync({
         disabled: (field) => {
           return computed(() => {
             return field.form.root.status$$() !== VALID;

@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { setComponent, NFCSchema, setWrappers, patchProps, asVirtualGroup } from '@piying/view-core';
+import { setComponent, NFCSchema, actions, asVirtualGroup } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -12,16 +12,21 @@ const schema = v.pipe(
           v.string(),
           v.minLength(1),
           v.title('Full Name'),
-          setWrappers(['label', 'validator']),
-          patchProps({ titlePosition: 'top' })
+          actions.wrappers.set(['label', 'validator']),
+          actions.props.patch({ titlePosition: 'top' })
         ),
-        email: v.pipe(v.optional(v.string()), v.title('Email'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
+        email: v.pipe(
+          v.optional(v.string()),
+          v.title('Email'),
+          actions.wrappers.set(['label', 'validator']),
+          actions.props.patch({ titlePosition: 'top' })
+        ),
         phone: v.pipe(
           v.string(),
           v.minLength(1),
           v.title('Phone'),
-          setWrappers(['label', 'validator']),
-          patchProps({ titlePosition: 'top' })
+          actions.wrappers.set(['label', 'validator']),
+          actions.props.patch({ titlePosition: 'top' })
         ),
       }),
       v.title('Personal Information'),
@@ -30,11 +35,36 @@ const schema = v.pipe(
     v.object({
       address: v.pipe(
         v.object({
-          line1: v.pipe(v.string(), v.title('Address Line 1'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
-          line2: v.pipe(v.string(), v.title('Address Line 2'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
-          city: v.pipe(v.string(), v.title('City'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
-          state: v.pipe(v.string(), v.title('State'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
-          zip: v.pipe(v.string(), v.title('ZIP Code'), setWrappers(['label', 'validator']), patchProps({ titlePosition: 'top' })),
+          line1: v.pipe(
+            v.string(),
+            v.title('Address Line 1'),
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
+          ),
+          line2: v.pipe(
+            v.string(),
+            v.title('Address Line 2'),
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
+          ),
+          city: v.pipe(
+            v.string(),
+            v.title('City'),
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
+          ),
+          state: v.pipe(
+            v.string(),
+            v.title('State'),
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
+          ),
+          zip: v.pipe(
+            v.string(),
+            v.title('ZIP Code'),
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
+          ),
         }),
         v.title('Address'),
         setComponent('fieldset')
@@ -45,15 +75,15 @@ const schema = v.pipe(
             v.string(),
             v.minLength(1),
             v.title('Full Name'),
-            setWrappers(['label', 'validator']),
-            patchProps({ titlePosition: 'top' })
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
           ),
           phone: v.pipe(
             v.string(),
             v.minLength(1),
             v.title('Phone'),
-            setWrappers(['label', 'validator']),
-            patchProps({ titlePosition: 'top' })
+            actions.wrappers.set(['label', 'validator']),
+            actions.props.patch({ titlePosition: 'top' })
           ),
         }),
         setComponent('fieldset'),

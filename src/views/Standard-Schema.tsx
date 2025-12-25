@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { setComponent, NFCSchema, setWrappers } from '@piying/view-core';
+import { setComponent, NFCSchema, actions } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -9,14 +9,14 @@ const schema = v.pipe(
       v.string(),
       v.minLength(3, '[Valibot] You must have a length of at least 3'),
       v.startsWith('A', "[Valibot] First name must start with 'A'"),
-      setWrappers(['label', 'validator']),
+      actions.wrappers.set(['label', 'validator']),
       v.title('First Name:')
     ),
     lastName: v.pipe(
       v.string(),
       v.title('Last Name:'),
       v.minLength(3, '[Valibot] You must have a length of at least 3'),
-      setWrappers(['label', 'validator'])
+      actions.wrappers.set(['label', 'validator'])
     ),
 
     __formHelper: v.pipe(NFCSchema, setComponent('formHelper')),

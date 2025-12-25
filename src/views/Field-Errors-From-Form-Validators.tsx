@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { setComponent, NFCSchema, setWrappers, formConfig, patchInputs } from '@piying/view-core';
+import { setComponent, NFCSchema, actions, formConfig } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -28,7 +28,7 @@ const schema = v.pipe(
         ],
       }),
       v.title('Username:'),
-      setWrappers(['label', 'validator'])
+      actions.wrappers.set(['label', 'validator'])
     ),
     age: v.pipe(
       v.number(),
@@ -45,16 +45,16 @@ const schema = v.pipe(
           },
         ],
       }),
-      setWrappers(['label', 'validator']),
+      actions.wrappers.set(['label', 'validator']),
       v.title('Age:')
     ),
 
     __formHelper: v.pipe(
       NFCSchema,
       setComponent('formHelper'),
-      patchInputs({
+      actions.inputs.patch({
         forceEnableSubmit: true,
-        asyncSubmit:true
+        asyncSubmit: true,
       })
     ),
   }),

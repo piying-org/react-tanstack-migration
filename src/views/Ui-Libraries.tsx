@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { setComponent, NFCSchema, setWrappers, patchAttributes } from '@piying/view-core';
+import { setComponent, NFCSchema, actions } from '@piying/view-core';
 import { fieldConfig } from '../piying/define';
 import { CustomNgBuilder } from '../piying/custom.builder';
 import { PiyingView } from '@piying/view-react';
@@ -7,14 +7,14 @@ const schema = v.pipe(
   v.object({
     firstName: v.pipe(
       v.string(),
-      patchAttributes({
+      actions.attributes.patch({
         placeholder: 'Enter your name',
       }),
       setComponent('mantine-input')
     ),
     lastName: v.pipe(
       v.string(),
-      patchAttributes({
+      actions.attributes.patch({
         placeholder: 'Enter your last name',
       }),
       setComponent('mui-input')
@@ -24,7 +24,7 @@ const schema = v.pipe(
     __formHelper: v.pipe(NFCSchema, setComponent('formHelper')),
   }),
   setComponent('fieldset'),
-  setWrappers(['mantine'])
+  actions.wrappers.set(['mantine'])
 );
 const options = {
   fieldGlobalConfig: fieldConfig,

@@ -12,13 +12,14 @@ import { FormHelp } from './form-help';
 import { Button } from './button';
 import { lazy } from 'react';
 import { MantineWrapper } from './wrapper/mantine-wrapper';
+import { actions } from '@piying/view-core';
 
 export const fieldConfig = {
   types: {
-    string: { type: InputText, wrappers: ['label'] },
-    number: { type: InputNumber, wrappers: ['label'] },
+    string: { type: InputText, actions: [actions.wrappers.set(['label'])] },
+    number: { type: InputNumber, actions: [actions.wrappers.set(['label'])] },
     radio: { type: InputRadio },
-    boolean: { type: InputCheckbox, wrappers: ['label'] },
+    boolean: { type: InputCheckbox, actions: [actions.wrappers.set(['label'])] },
     fieldset: { type: FieldsetGroup },
     'multi-checkbox': { type: MultiCheckbox },
     'array-rw': { type: ArrayRwGroup },
